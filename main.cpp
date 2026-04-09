@@ -28,7 +28,7 @@ void display_matrix(int **matrix, int a)
         cout << endl;
     }
 }
-
+// free allocated memory
 void free_matrix(int **matrix, int a)
 {
     for (int i = 0; i < a; i++)
@@ -37,31 +37,31 @@ void free_matrix(int **matrix, int a)
     }
     free(matrix);
 }
-// generate a new position that satisfies constraint
-pair<int, int> get_position(int **matrix, int a)
+// check if the position is acceptable or not
+bool satisfies_constraint(int **matrix, int a, int row, int col)
 {
+    if (matrix[row][col] == 1)
+    {
+        return false;
+    }
 }
 
 // keep generating a random number until the queen satisfies the constraints
 // function takes current matrix
 void fill_matrix(int ***matrix, int a)
 {
-    // use *matrix
-    // formula for a number in [min, max]: rand() % (max - min + 1) + min;
-    // place the first queen
-    int row = rand() % a;
-    int col = rand() % a;
-    *matrix[row][col] = 1;
-    // place the second queen such that it satisfies the constraint
-    // recursively solve the rest
-
     // loop N times (number of queens to place)
     for (int i = 0; i < a; i++)
     {
         int row = rand() % a;
         int col = rand() % a;
+        // make sure the position satisfies the constraints
+        while (!satisfies_constraint(*matrix, a, row, col))
+        {
+            int row = rand() % a;
+            int col = rand() % a;
+        }
         *matrix[row][col] = 1;
-        // get_position(*matrix, a)
     }
 }
 
