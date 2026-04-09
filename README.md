@@ -1,5 +1,5 @@
 # Problem Description
-N-Queens problem consists of placing N queens on an NxN chessboard sucj that no two queens attack each other.
+N-Queens problem consists of placing N queens on an NxN chessboard such that no two queens attack each other.
 Queens should be placed such that there is no more than one queen on a row / column / diagonal.
 
 Check the illustration below:
@@ -15,9 +15,20 @@ A common solution to solve the N-Queens problem is backtracking.
 How I would think about it:
 - Place the first queen at a random position
 - Attempt to place to other queen at a random position
-- If any of the queens can attack each other on the chessboard, move the second queen to another position untill they cannot attack each other. Else, leave in same positions
+- If any of the queens can attack each other on the chessboard, move the second queen to another position until they cannot attack each other. Else, leave in same positions
 - Repeat
 
+- Constraints:
+. queen at same position
+. queen at same row
+. queen at same col
+. queen at same diagonal
+
+- Algorithm:
+. populate the matrix with 0's (no queens)
+. place a queen in a random position
+. place other queen in a position that satisfies the constraint
+. recursively solve all the rest
 
 # Steps
 - solution(N) -> NxN (1 for queen, 0 for no queen)
