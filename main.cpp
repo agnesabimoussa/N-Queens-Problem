@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <math.h>
+#include <utility>
 // #include "raylib.h"
 
 using namespace std;
@@ -36,9 +37,33 @@ void free_matrix(int **matrix, int a)
     }
     free(matrix);
 }
+// generate a new position that satisfies constraint
+pair<int, int> get_position(int **matrix, int a)
+{
+}
 
 // keep generating a random number until the queen satisfies the constraints
-int 
+// function takes current matrix
+void fill_matrix(int ***matrix, int a)
+{
+    // use *matrix
+    // formula for a number in [min, max]: rand() % (max - min + 1) + min;
+    // place the first queen
+    int row = rand() % a;
+    int col = rand() % a;
+    *matrix[row][col] = 1;
+    // place the second queen such that it satisfies the constraint
+    // recursively solve the rest
+
+    // loop N times (number of queens to place)
+    for (int i = 0; i < a; i++)
+    {
+        int row = rand() % a;
+        int col = rand() % a;
+        *matrix[row][col] = 1;
+        // get_position(*matrix, a)
+    }
+}
 
 // initialize NxN matrix, solve problem, return solution
 int **get_solution(int a)
@@ -68,13 +93,7 @@ int **get_solution(int a)
             matrix[i][j] = 0;
         }
     }
-    // formula for a number in [min, max]: rand() % (max - min + 1) + min;
-    // place the first queen
-    int row = rand() % a;
-    int col = rand() % a;
-    matrix[row][col] = 1;
-    // place the second queen such that it satisfies the constraint
-    // recursively solve the rest
+    fill_matrix(&matrix, a);
     return (matrix);
 }
 
