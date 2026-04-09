@@ -24,7 +24,6 @@ How I would think about it:
 . queen at same col
 . queen at same diagonal
 
-
 - Algorithm:
 . populate the matrix with 0's (no queens)
 . place a queen in a random position

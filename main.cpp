@@ -37,13 +37,57 @@ void free_matrix(int **matrix, int a)
     }
     free(matrix);
 }
+
 // check if the position is acceptable or not
 bool satisfies_constraint(int **matrix, int a, int row, int col)
 {
+    // no two queens on same place
     if (matrix[row][col] == 1)
     {
         return false;
     }
+    // no two queens on same col or row
+    for (int i = 0; i < a; i++)
+    {
+        if (matrix[i][col] == 1 || matrix[row][i] == 1)
+        {
+            return false;
+        }
+    }
+    // no two queens on same diagonal
+    // ↖ diagonal
+    for (int i = row, j = col; i >= 0 && j >= 0; i--, j--)
+    {
+        if (matrix[i][j] == 1)
+        {
+            return false;
+        }
+    }
+    // ↗ diagonal
+    for (int i = row, j = col; i >= 0 && j < a; i--, j++)
+    {
+        if (matrix[i][j] == 1)
+        {
+            return false;
+        }
+    }
+    // ↙ diagonal
+    for (int i = row, j = col; i < a && j >= 0; i++, j--)
+    {
+        if (matrix[i][j] == 1)
+        {
+            return false;
+        }
+    }
+    // ↘ diagonal
+    for (int i = row, j = col; i < a && j < a; i++, j++)
+    {
+        if (matrix[i][j] == 1)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 // keep generating a random number until the queen satisfies the constraints
@@ -58,10 +102,10 @@ void fill_matrix(int ***matrix, int a)
         // make sure the position satisfies the constraints
         while (!satisfies_constraint(*matrix, a, row, col))
         {
-            int row = rand() % a;
-            int col = rand() % a;
+            row = rand() % a;
+            col = rand() % a;
         }
-        *matrix[row][col] = 1;
+        (*matrix)[row][col] = 1;
     }
 }
 
