@@ -51,6 +51,7 @@ The illustration below shows an example output for a 8x8 chessboard:
 Follow these steps to install RayLib which will be used as the graphics library for rendering the chessboard solved:
 
 . Open your wsl terminal
+
 . update package lists
 ```bash
 sudo apt update
@@ -88,7 +89,7 @@ make
 make clean
 ```
 
-. Run the executable, make sure to give the program an integer argument between 5 and 500, which will determine the width and height of the chessboard
+. Run the executable, make sure to give the program an integer argument between 4 and 50, which will determine the width and height of the chessboard
 ```bash
 ./main <value>
 ```
