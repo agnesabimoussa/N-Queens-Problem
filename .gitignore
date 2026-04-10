@@ -2,3 +2,4 @@
 raylib/
 *.o
 main
+output.txt

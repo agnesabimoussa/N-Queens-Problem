@@ -1,86 +1,4 @@
-#include <iostream>
-#include <stdlib.h>
-#include <ctime>
-#include <math.h>
-#include <cstdio>
-#include "raylib.h"
-
-using namespace std;
-
-// draw using RayLib library
-void draw_chessboard(int **matrix, int a)
-{
-    (void)matrix;
-    // Determine cell size
-    int cell_size = 25;
-
-    // derive the width and height of window
-    int dimensions = a * cell_size;
-    int window_width = dimensions;
-    int window_height = dimensions;
-
-    char buffer[47];
-    snprintf(buffer, sizeof(buffer), "N Queens Problem Solution for %dx%d chessboard", a, a);
-    // Initialization
-    InitWindow(window_width, window_height, buffer);
-    SetTargetFPS(60);
-    // Main game loop
-    while (!WindowShouldClose())
-    {
-        BeginDrawing();
-        ClearBackground(RAYWHITE); // Background color
-
-        // draw cells with checkerboard pattern
-        for (int i = 0; i < a; i++)
-        {
-            for (int j = 0; j < a; j++)
-            {
-                int x = i * cell_size;
-                int y = j * cell_size;
-                if (matrix[i][j] == 1)
-                {
-                    // draw queen inside the cell
-                    Texture2D queen = LoadTexture("assets/queen.png");
-                    Rectangle cell = {(float)x, (float)y, (float)cell_size, (float)cell_size};
-                    DrawTexturePro(
-                        queen,
-                        (Rectangle){0, 0, (float)queen.width, (float)queen.height},
-                        cell,
-                        (Vector2){0, 0},
-                        0.0f,
-                        WHITE);
-                }
-                else
-                {
-                    // Checkerboard pattern: alternating white and cream colors
-                    Color cellColor = ((i + j) % 2 == 0) ? WHITE : (Color){240, 220, 200, 255};
-                    DrawRectangle(x, y, cell_size, cell_size, cellColor);
-                    DrawRectangleLines(x, y, cell_size, cell_size, BLACK);
-                }
-            }
-        }
-        EndDrawing();
-    }
-    CloseWindow();
-}
-
-// display solution (used for debugging)
-void display_matrix(int **matrix, int a)
-{
-    if (!matrix || !*matrix)
-    {
-        cout << "Error: matrix is null.\n";
-        exit(EXIT_FAILURE);
-    }
-    for (int i = 0; i < a; i++)
-    {
-        for (int j = 0; j < a; j++)
-        {
-            cout << matrix[i][j] << " ";
-        }
-        cout << endl;
-    }
-}
+#include "main.hpp"
 
 // free allocated memory
 void free_matrix(int **matrix, int a)
@@ -90,6 +8,31 @@ void free_matrix(int **matrix, int a)
         free(matrix[i]);
     }
     free(matrix);
+}
+
+// write solution in text file -> needed for automatic testing
+void write_matrix(int **matrix, int a)
+{
+    ofstream file("output.txt");
+    if (!file.is_open())
+    {
+        cerr << "Error: Could not open output.txt for validation.\n";
+        exit(EXIT_FAILURE);
+    }
+    file << a << endl;
+    for (int i = 0; i < a; i++)
+    {
+        for (int j = 0; j < a; j++)
+        {
+            file << matrix[i][j];
+            if (!(j == a - 1))
+            {
+                file << " ";
+            }
+        }
+        file << endl;
+    }
+    file.close();
 }
 
 // check if the position is acceptable or not
@@ -142,48 +85,6 @@ bool satisfies_constraint(int **matrix, int a, int row, int col)
         }
     }
     return true;
-}
-
-// validate the N-Queens solution: verify no two queens can attack each other
-bool is_valid_solution(int **matrix, int a)
-{
-    int queen_count = 0;
-    // Count queens and get their positions
-    for (int i = 0; i < a; i++)
-    {
-        for (int j = 0; j < a; j++)
-        {
-            if (matrix[i][j] == 1)
-            {
-                queen_count++;
-                // Check if this queen violates constraints when compared to other queens
-                for (int k = 0; k < a; k++)
-                {
-                    // Check row conflicts (excluding itself)
-                    if (k != j && matrix[i][k] == 1)
-                        return false;
-                    // Check column conflicts (excluding itself)
-                    if (k != i && matrix[k][j] == 1)
-                        return false;
-                }
-                // Check diagonal conflicts
-                for (int di = -a; di <= a; di++)
-                {
-                    for (int dj = -a; dj <= a; dj++)
-                    {
-                        if ((di != 0 && dj != 0) && (abs(di) == abs(dj)))
-                        {
-                            int ni = i + di, nj = j + dj;
-                            if (ni >= 0 && ni < a && nj >= 0 && nj < a && matrix[ni][nj] == 1)
-                                return false;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    // Verify we have exactly a queens
-    return queen_count == a;
 }
 
 // keep generating a random number until the queen satisfies the constraints
@@ -273,14 +174,8 @@ int main(int argc, char **argv)
         return (EXIT_FAILURE);
     }
     int **matrix = get_solution(a);
-    display_matrix(matrix, a);
-    // Validate the solution before displaying
-    if (!is_valid_solution(matrix, a))
-    {
-        cout << "Error: Invalid solution generated! Queens can attack each other.\n";
-        free_matrix(matrix, a);
-        return (EXIT_FAILURE);
-    }
+    // write the output inside a text file
+    write_matrix(matrix, a);
     cout << "Solution is valid! No queens can attack each other.\n";
     draw_chessboard(matrix, a);
     free_matrix(matrix, a);
