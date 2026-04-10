@@ -27,6 +27,30 @@ void draw_chessboard(int **matrix, int a)
         BeginDrawing();
         ClearBackground(RAYWHITE); // Background color
         // draw cells
+        for (int i = 0; i < a; i++)
+        {
+            for (int j = 0; j < a; j++)
+            {
+                if (matrix[i][j] == 1)
+                {
+                    // draw queen inside the cell
+                    Texture2D queen = LoadTexture("assets/queen.png");
+                    Rectangle cell = {(float)(i * cell_size), (float)(j * cell_size), (float)cell_size, (float)cell_size};
+                    DrawTexturePro(
+                        queen,
+                        (Rectangle){0, 0, (float)queen.width, (float)queen.height},
+                        cell,
+                        (Vector2){0, 0},
+                        0.0f,
+                        WHITE);
+                }
+                else
+                {
+                    DrawRectangle(i * cell_size, j * cell_size, cell_size, cell_size, LIGHTGRAY);
+                    DrawRectangleLines(i * cell_size, j * cell_size, cell_size, cell_size, DARKGRAY);
+                }
+            }
+        }
         EndDrawing();
     }
     CloseWindow();
