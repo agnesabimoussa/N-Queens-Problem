@@ -2,13 +2,25 @@
 #include <stdlib.h>
 #include <math.h>
 #include <utility>
-// #include "raylib.h"
+#include "raylib.h"
 
 using namespace std;
 
 // draw using RayLib library
 void draw_chessboard(int **matrix, int a)
 {
+    // Initialization
+    InitWindow(800, 450, "N Queens Problem Solution for NxN chessboard");
+    SetTargetFPS(60);
+    // Main game loop
+    while (!WindowShouldClose())
+    {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        EndDrawing();
+    }
+    CloseWindow();
 }
 
 // display solution (used for debugging)
@@ -141,7 +153,7 @@ int **get_solution(int a)
     return (matrix);
 }
 
-// take height and width from the user (valid integers, range [1, 500])
+// take height and width from the user (valid integers, range [4, 500])
 // solve problem
 // display solution
 int main(int argc, char **argv)
@@ -160,7 +172,7 @@ int main(int argc, char **argv)
     }
     int **matrix = get_solution(a);
     display_matrix(matrix, a);
-    // draw_chessboard(matrix, a);
+    draw_chessboard(matrix, a);
     free_matrix(matrix, a);
     return (EXIT_SUCCESS);
 }

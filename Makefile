@@ -1,6 +1,6 @@
 CXX = g++
-CXXFLAGS = -Wall -Wextra -Werror
-TARGET = program
+CXXFLAGS = 
+TARGET = main
 SOURCES = main.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 

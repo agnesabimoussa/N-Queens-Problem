@@ -32,7 +32,7 @@ How I would think about it:
 
 # Steps
 - solution(N) -> NxN (1 for queen, 0 for no queen)
-- draw(nxN)
+- draw(NxN)
 
 The illustration below shows an example output for a 8x8 chessboard:
 
@@ -41,6 +41,61 @@ The illustration below shows an example output for a 8x8 chessboard:
 </div>
 
 
-# Technology
-- C++ (appears in course materials + best for me to remember + good performance)
-RayLib library for rendering chessboard
+# Tools
+- C++
+- RayLib library for rendering chessboard
+- linux terminal
+
+
+# Setup
+Follow these steps to install RayLib which will be used as the graphics library for rendering the chessboard solved:
+
+. Open your wsl terminal
+. update package lists
+```bash
+sudo apt update
+```
+
+. Install build tools, git, and raylib dependencies
+```bash
+sudo apt install build-essential git cmake \
+libasound2-dev mesa-common-dev libx11-dev \
+libxrandr-dev libxi-dev xorg-dev libgl1-mesa-dev \
+libglu1-mesa-dev -y
+```
+
+. Clone RayLib
+```bash
+git clone https://github.com/raysan5/raylib.git
+cd raylib/src
+```
+
+. Compile and install
+```bash
+make PLATFORM=PLATFORM_DESKTOP
+sudo make install
+```
+
+
+# Instructions
+. Compile the .cpp files against the RayLib library
+```bash
+make
+```
+
+. Remove .o files
+```bash
+make clean
+```
+
+. Run the executable, make sure to give the program an integer argument between 5 and 500, which will determine the width and height of the chessboard
+```bash
+./main <value>
+```
+
+. Test the program with different arguments
+
+. Remove the executable
+```bash
+make fclean
+```
