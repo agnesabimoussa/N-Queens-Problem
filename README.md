@@ -89,7 +89,7 @@ make
 make clean
 ```
 
-. Run the executable, make sure to give the program an integer argument between 4 and 50, which will determine the width and height of the chessboard
+. Run the executable, make sure to give the program an integer argument between 4 and 40, which will determine the width and height of the chessboard
 ```bash
 ./main <value>
 ```
