@@ -3,15 +3,12 @@
 // draw using RayLib library
 void draw_chessboard(int **matrix, int a)
 {
-    (void)matrix;
     // Determine cell size
     int cell_size = 25;
-
     // derive the width and height of window
     int dimensions = a * cell_size;
     int window_width = dimensions;
     int window_height = dimensions;
-
     char buffer[47];
     snprintf(buffer, sizeof(buffer), "N Queens Problem Solution for %dx%d chessboard", a, a);
     // Initialization
@@ -22,7 +19,6 @@ void draw_chessboard(int **matrix, int a)
     {
         BeginDrawing();
         ClearBackground(RAYWHITE); // Background color
-
         // draw cells with checkerboard pattern
         for (int i = 0; i < a; i++)
         {
@@ -56,4 +52,3 @@ void draw_chessboard(int **matrix, int a)
     }
     CloseWindow();
 }
-

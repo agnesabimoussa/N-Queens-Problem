@@ -14,10 +14,10 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJECTS)
+	rm -f $(OBJECTS) validation.o
 
 fclean: clean
-	rm -f $(TARGET)
+	rm -f $(TARGET) validation
 
 re: fclean all
 
